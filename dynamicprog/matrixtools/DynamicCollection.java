@@ -4,7 +4,11 @@ import java.awt.*;
 import java.util.*;
 
 /**
-* See ReadMe for details
+* 
+ * @author Kelvinzero House of Shiva
+ *         Armiger and Standard Bearer for the Justiciar,
+ *         and Vicar to Karth the Falconer
+ *
 */
 public class DynamicCollection {
 
@@ -62,4 +66,70 @@ public static int shortestPath(Node[][] W, int j, int k, int M, int N) {
         lowestPath.add(0, new Point(j, k)); // - - - - c17
         return lowestPath; // - - - - c18
     }
-  }
+    
+    /**
+     * recursively checks all possible solutions for the queens problem.
+     * the integer array parameter represents the columns, and the value in
+     * each column of the array is the numbered position of the queen in
+     * that row.
+     *
+     * @param C     - the vertical axis of the chess board
+     * @param queen - queen i always goes on row i
+     */
+    public static void queens(int[] C, int queen) { // queen i goes in queen i4
+
+        // first make sure this queen isn't in conflict with previously placed queens,
+        // method call backs out if this queen doesn't fit here
+        if (safespace(C, queen)) { // - - - n
+            // if a safespace has been found in the last row a solution set is complete,
+            // print the chess board
+            if (queen == C.length - 1) { // - - - c1
+                System.out.println(); // - - - c2
+                printSolution(C); // - - -  c3
+            }
+            // if this safespace is not in last row, try to add a queen in the next row
+            else {  // - - - - - c4
+                for (int column = 0; column < C.length; column++) { // - - - - c5
+                    C[queen + 1] = column;  // - - - - c6
+                    queens(C, queen + 1); // - - - - n!
+                }
+            }
+        }
+    }
+    
+    /**
+     * checks columns 0 to q-1 that they are not in conflict with the queen
+     * in the current row.
+     *
+     * @param C     - the vertical axis of the chess board
+     * @param queen - queen i always goes on row i
+     */
+    public static boolean safespace(int[] C, int queen) {
+
+        boolean safespace = true;
+
+        for (int i = 0; i < queen; i++) {
+            if (C[i] == C[queen])
+                return false;
+            if (Math.abs(C[queen] - C[i]) == queen - i)
+                return false;
+        }
+        return true;
+    }
+    
+    /* prints the chess board */
+    static void printBoard(int C[]) {
+
+        System.out.println();
+
+        for (int r = 0; r < C.length; r++) { // rows
+            for (int c = 0; c < C.length; c++) { // columns
+                if (C[r] == c)
+                    System.out.print(" Q ");
+                else
+                    System.out.print(" * ");
+            }
+            System.out.println();
+        }
+    }
+ }
