@@ -40,10 +40,9 @@ public class DynamicCollection {
 
         for (int r = 1; r < M; r++) // - - - M
             total_weight[r][0] = total_weight[r - 1][0] + W[r][0].weight; // - - c3
-
-        for (int c = 1; c < N; c++){ // - - - N
+        for (int c = 1; c < N; c++) // - - - N
             total_weight[0][c] = total_weight[0][c-1] + W[0][c].weight; // - - - c4
-        }
+        
         for (int r = 1; r < M; r++){ // - - - - - - - - - M^N (n^2 if M=N)
             for(int c = 1; c < N; c++){ // - - - - /
                 total_weight[r][c] = Math.min(
@@ -113,7 +112,7 @@ public class DynamicCollection {
             }
             // if this safespace is not in last row, try to add a queen in the next row
             else {  // - - - - - c4
-                for (int column = 0; column < C.length; column++) { // - - - - c5
+                for (int column = 0; column <= C.length; column++) { // - - - - c5
                     C[queen + 1] = column;  // - - - - c6
                     queens(C, queen + 1); // - - - - n!
                 }
@@ -122,23 +121,22 @@ public class DynamicCollection {
     }
     
      /* queens algorithm modified to stop searching after the first solution is found */ 
-    public static boolean queens_firstonly(int[] C, int queen) { // queen i goes in queen i4
+    public static boolean queens_first_solution_only(int[] C, int queen) { 
 
         // first make sure this queen isn't in conflict with previously placed queens,
         // method call backs out if this queen doesn't fit here
-        if (safespace(C, queen)) { // - - - n
+        if (safespace(C, queen)) { 
             // if a safespace has been found in the last row a solution set is complete,
             // print the chess board
-            if (queen == C.length - 1) { // - - - c1
-                System.out.println(); // - - - c2
-                printBoard(C); // - - -  c3
+            if (queen == C.length - 1) { 
+                printBoard(C);
                 return false;
             }
             // if this safespace is not in last row, try to add a queen in the next row
-            else {  // - - - - - c4
-                for (int column = 0; column < C.length; column++) { // - - - - c5
-                    C[queen + 1] = column;  // - - - - c6
-                    if(!queens_firstonly(C, queen + 1)) // - - - - n!
+            else { 
+                for (int column = 0; column <= C.length; column++) { 
+                    C[queen + 1] = column; 
+                    if(!queens_first_solution_only(C, queen + 1)) 
                         return false;
                 }
             }
@@ -153,10 +151,12 @@ public class DynamicCollection {
      * @param C     - the vertical axis of the chess board
      * @param queen - queen i always goes on row i
      */
+     // No modification from original until queens_first_solution_only
+     // safespace included to complete code
     public static boolean safespace(int[] C, int queen) {
-
+         
         boolean safespace = true;
-
+        
         for (int i = 0; i < queen; i++) {
             if (C[i] == C[queen])
                 return false;
