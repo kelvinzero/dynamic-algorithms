@@ -23,7 +23,7 @@ that row. Added check to stop after first solution set found.*
 starting at the point W[j][k], to the W[M][N] point, then returns all of the Points along the path. Running time and restrictions
 are the same as shortestPath()*
 
-**boolean safespace(int[] C, int queen)** - * checks columns 0 to queen-1 that they are not in conflict with the queen
+**boolean safespace(int[] C, int queen)** - checks columns 0 to queen-1 that they are not in conflict with the queen
 in the current row. *
 
 **void printBoard(int C[])** - *prints the chess board*
