@@ -13,7 +13,7 @@ the integer array parameter represents the columns, and the value in
 each column of the array is the numbered position of the queen in
 that row.*
 
-**void queens_first_selection_only(int[] C, int queen)** - 
+**void queens_first_solution_only(int[] C, int queen)** - 
 *recursively checks all possible solutions for the queens problem.
 the integer array parameter represents the columns, and the value in
 each column of the array is the numbered position of the queen in
