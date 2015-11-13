@@ -12,24 +12,48 @@ import java.util.*;
 */
 public class DynamicCollection {
 
-/* 
-* returns the sum of weights in the shortest path from W[j][k] to W[M][N] 
-* see readme for further information
-*/
-public static int shortestPath(Node[][] W, int j, int k, int M, int N) {
+    /* 
+    * returns the sum of weights in the shortest path from W[j][k] to W[M][N] 
+    * see readme for further information
+    */
+    public static int lowest_sum_path(Node[][] W, int j, int k, int M, int N) { // - - - T(n)
 
         if (j == M && k == N) return W[j][k].weight; // base case the lower right corner - - - - c1
 
         int smallest = Integer.MAX_VALUE; // - - - - - - - - c2
         // if next node exists, compares recursive call to current
-        // smallest each time, keeping the smallest of the two //
-        if (j < M) smallest = Math.min(smallest, shortestPath(W, j + 1, k, M, N)); // - - - - - - - - n^3
-        if (k < N) smallest = Math.min(smallest, shortestPath(W, j, k + 1, M, N)); // - - - - - - - n^3
-        if (j < M && k < N) smallest = Math.min(smallest, shortestPath(W, j + 1, k + 1, M, N)); // - - - - n^3
+        // smallest each time, keeping the smallest of the two // 
+        if (j < M) smallest = Math.min(smallest, lowest_sum_path(W, j + 1, k, M, N)); // - - - - - - - - n^3
+        if (k < N) smallest = Math.min(smallest, lowest_sum_path(W, j, k + 1, M, N)); // - - - - - - - n^3
+        if (j < M && k < N) smallest = Math.min(smallest, lowest_sum_path(W, j + 1, k + 1, M, N)); // - - - - n^3
 
         return W[j][k].weight + smallest; // - - - - - - - - c4
     }
     
+    public static int lowest_sum_path_dynamic(Node[][] W) { // shortest path from 0,0 to M,N
+
+        int M = W.length; // - - - - - c1
+        int N = W[0].length; // - - -/
+
+        int total_weight[][] = new int[M][N]; // - - - - c2
+        total_weight[0][0] = W[0][0].weight; // - - -/
+
+        for (int r = 1; r < M; r++) // - - - M
+            total_weight[r][0] = total_weight[r - 1][0] + W[r][0].weight; // - - c3
+
+        for (int c = 1; c < N; c++){ // - - - N
+            total_weight[0][c] = total_weight[0][c-1] + W[0][c].weight; // - - - c4
+        }
+        for (int r = 1; r < M; r++){ // - - - - - - - - - M^N (n^2 if M=N)
+            for(int c = 1; c < N; c++){ // - - - - /
+                total_weight[r][c] = Math.min(
+                        Math.min(total_weight[r-1][c-1],total_weight[r-1][c])
+                        , total_weight[r][c-1]) + W[r][c].weight;// - - - - - - - - c5
+            }
+        }
+        return total_weight[M-1][N-1]; // - - - - c6
+    }
+
     /* 
     * returns the Point coordinates of the nodes in the shortest path from W[j][k] to W[M][N] 
     * see readme for further information
