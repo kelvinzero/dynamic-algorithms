@@ -188,19 +188,19 @@ public class DynamicCollection {
      * @param root - - the root node to search from
      * @param adjacency_matrix - - An array of ArrayLists
      */
-    public static void create_adjacency_matrix(BST_Node root, ArrayList<BST_Node>[] adjacency_matrix) {
+    public static void create_adjacency_list(BST_Node root, ArrayList<BST_Node>[] adjacency_list) {
 
         if (root == null) // - - - c1
             return; // - - - /
 
-        adjacency_matrix[root.key] = new ArrayList<BST_Node>();
+        adjacency_list[root.key] = new ArrayList<BST_Node>();
         if(root.leftchild != null)
-            adjacency_matrix[root.key].add(root.leftchild);
+            adjacency_list[root.key].add(root.leftchild);
         if(root.rightchild != null)
-            adjacency_matrix[root.key].add(root.rightchild);
+            adjacency_list[root.key].add(root.rightchild);
 
-        create_adjacency_matrix(root.leftchild, adjacency_matrix); // - - - O(n)
-        create_adjacency_matrix(root.rightchild, adjacency_matrix);// - - - O(n)
+        create_adjacency_list(root.leftchild, adjacency_list); // - - - O(n)
+        create_adjacency_list(root.rightchild, adjacency_list);// - - - O(n)
     }
  }
 
