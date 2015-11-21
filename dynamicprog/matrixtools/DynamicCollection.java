@@ -181,4 +181,35 @@ public class DynamicCollection {
             System.out.println();
         }
     }
+    
+     /**
+     * builds an adjacency list from a binary search tree
+     * 
+     * @param root - - the root node to search from
+     * @param adjacency_matrix - - An array of ArrayLists
+     */
+    public static void create_adjacency_matrix(BST_Node root, ArrayList<BST_Node>[] adjacency_matrix) {
+
+        if (root == null) // - - - c1
+            return; // - - - /
+
+        adjacency_matrix[root.key] = new ArrayList<BST_Node>();
+        if(root.leftchild != null)
+            adjacency_matrix[root.key].add(root.leftchild);
+        if(root.rightchild != null)
+            adjacency_matrix[root.key].add(root.rightchild);
+
+        create_adjacency_matrix(root.leftchild, adjacency_matrix); // - - - O(n)
+        create_adjacency_matrix(root.rightchild, adjacency_matrix);// - - - O(n)
+    }
  }
+
+
+
+
+
+
+
+
+
+
