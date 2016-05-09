@@ -23,10 +23,8 @@ public class Test_Dijkstra {
             try {
                 adjacency_list = create_adjacency_list(args[0]); // create adjacency list from file
                 start_vertex = Integer.parseInt(args[1]); // start vertex from main parameter
-                //dijkstra(adjacency_list, start_vertex); // get shortest paths
-                //display(adjacency_list, start_vertex); // display the paths
                 TC_matrix = new boolean[adjacency_list.length][adjacency_list.length];
-                dijkstraWithClosure(adjacency_list, 0);
+                dijkstraWithClosure(adjacency_list, start_vertex);
 
                 for(boolean[] B : TC_matrix){
                     for(boolean b : B){
@@ -45,7 +43,13 @@ public class Test_Dijkstra {
         }
     }
 
-
+    /**
+     * Calculates shortest distances using an array of adjacency list and Dijkstra's algorithm
+     *
+     * @param adjacency_list - array of adjacency lists
+     * @param start - start point
+     * @return
+     */
     private static MinHeap dijkstraWithClosure(Adjacency_List[] adjacency_list, int start) {
 
         Integer infty = Integer.MAX_VALUE;
@@ -59,7 +63,6 @@ public class Test_Dijkstra {
 
         S = new MinHeap(adjacency_list.length); // shortest path of vertices and weights
         Q = new MinHeap(adjacency_list.length); // all nodes in the graph
-        TC = new MinHeap(adjacency_list.length);
 
         start_vertex = adjacency_list[start].subject_vertex; // start point
         start_vertex.weight = 0; // start weight to zero so it gets picked first

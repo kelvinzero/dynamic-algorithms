@@ -1,3 +1,4 @@
+package dynamicprog.matrixtools.node;
 /*
 * A generic node that holds an int
 */
